@@ -1,8 +1,9 @@
 import os ,shutil
-from fastapi import FastAPI , File , UploadFile ,HTTPException
+from fastapi import FastAPI , File , UploadFile ,HTTPException 
 from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
-from pydantic
+from pydantic import BaseModel ,Field
+from app.api.pydantic_models import TrainingEssentials
 
 dataset_service = DatasetCheck()
 app = FastAPI()
@@ -42,9 +43,16 @@ async def create_upload_file(file : UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500 , detail="Interal server issue")
     
-@app.get('/deleteFile')
-def deleteFile():
-    dataset_service.remove_file()
+@app.post('/deleteFile/{filename}')
+async def deleteFile(filename : str):
+    # fileDict = {"filename":filename}
+    dataset_service.remove_file(filename)
+    return {"message" : "Files deleted successfully"}
 
             
+@app.post('/train')
+async def train_models(item : TrainingEssentials):
+    # item_dict = item.model_dump()
+    return {"item":item}
+
     
