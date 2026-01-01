@@ -4,6 +4,7 @@ from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
 from pydantic import BaseModel ,Field
 from app.api.pydantic_models import TrainingEssentials
+from app.ModelTraining import modelTrainingfunc
 
 dataset_service = DatasetCheck()
 app = FastAPI()
@@ -52,7 +53,10 @@ async def deleteFile(filename : str):
             
 @app.post('/train')
 async def train_models(item : TrainingEssentials):
-    # item_dict = item.model_dump()
-    return {"item":item}
+    item_dict = dict(item)
+
+    ans = modelTrainingfunc(item_dict)
+    return {'msg from model' : ans}
+
 
     
