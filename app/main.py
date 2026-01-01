@@ -2,6 +2,7 @@ import os ,shutil
 from fastapi import FastAPI , File , UploadFile ,HTTPException
 from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
+from pydantic
 
 dataset_service = DatasetCheck()
 app = FastAPI()
@@ -9,9 +10,14 @@ app = FastAPI()
 upload_dir = 'storage/uploaded'
 os.makedirs(upload_dir , exist_ok=True)
 
+
 @app.get('/')
 def root():
     return {'msg':"hello world from fastAPI"}
+
+@app.get('/filesUploaded')
+def ShowFileNames():
+    return {"datasets" : dataset_service.list_Datasets()}
 
 @app.post('/uploadfile/')
 async def create_upload_file(file : UploadFile = File(...)):
@@ -35,5 +41,10 @@ async def create_upload_file(file : UploadFile = File(...)):
     
     except Exception as e:
         raise HTTPException(status_code=500 , detail="Interal server issue")
+    
+@app.get('/deleteFile')
+def deleteFile():
+    dataset_service.remove_file()
+
             
     
