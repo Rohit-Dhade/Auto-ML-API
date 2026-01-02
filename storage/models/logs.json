@@ -1,0 +1,23 @@
+[
+    {
+        "model_id": "3e0adabe3f28bae48d078acffcef6f7e",
+        "Problem_type": "regression",
+        "dataset_used": "dummy_data.csv",
+        "target_col": "Sales",
+        "created_at": "2026-01-02"
+    },
+    {
+        "model_id": "ad1509a8dc6c776a41a81cdcc5bd1527",
+        "Problem_type": "classification",
+        "dataset_used": "adult.csv",
+        "target_col": "income",
+        "created_at": "2026-01-02"
+    },
+    {
+        "model_id": "61633ea5e08defb37f95aa019e8251f7",
+        "Problem_type": "classification",
+        "dataset_used": "heart.csv",
+        "target_col": "target",
+        "created_at": "2026-01-02"
+    }
+]

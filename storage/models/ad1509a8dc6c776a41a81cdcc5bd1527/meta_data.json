@@ -20,5 +20,6 @@
         "capital.loss",
         "hours.per.week"
     ],
-    "Algorithm": "RandomForestClassifier"
+    "Algorithm": "RandomForestClassifier",
+    "model_id": "ad1509a8dc6c776a41a81cdcc5bd1527"
 }

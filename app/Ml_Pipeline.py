@@ -1,4 +1,5 @@
 import json , hashlib ,os , joblib
+from datetime import date
 from fastapi import HTTPException
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
@@ -13,7 +14,12 @@ def generate_model_id(config: dict) -> str:
     config_str = json.dumps(config , sort_keys=True)
     return hashlib.md5(config_str.encode()).hexdigest()
     
-
+def write_json(data , filename = "storage/models/logs.json"):
+    with open(filename , 'r+') as file:
+        file_data = json.load(file)
+        file_data.append(data)
+        file.seek(0)
+        json.dump(file_data , file , indent=4 , ensure_ascii=False)
 
 def model_response_classification(dataFrame,  categorical_features , numerical_features , target ,fn):
     
@@ -43,7 +49,7 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
         y_encoded = label.fit_transform(y)
 
         lable_mapping = {
-            int(i) : label
+            int(i) : str(label)
             for i, label in enumerate(label.classes_)
         }
 
@@ -79,22 +85,32 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
         precision = precision_score(y_test , y_pred)
         f1 = f1_score(y_test , y_pred)
         
+        logs_data = {
+            "model_id": str(model_id),
+            "Problem_type": "classification",
+            "dataset_used": str(fn),
+            "target_col": str(target),
+            "created_at": str(date.today())
+        }
+        
         try:
             with open(f"{filepath}/model.pkl" , 'wb') as file:
                 joblib.dump(model_pipeline , file)
                 
             with open(f"{filepath}/meta_data.json" , 'w' , encoding='utf-8') as json_file:
                 json.dump(config , json_file ,indent=4 , ensure_ascii=False)
+                
+            write_json(logs_data)
 
         except Exception: 
             raise HTTPException(status_code=500 , detail="Some error in saving pkl file or json meta-data")
 
         return {
             "model":"RandomForestClassifier",
-            "Accuracy score":accuracy,
-            "Precision":precision,
-            "Recall": recall,
-            "F1_score": f1,
+            "Accuracy score":float(accuracy),
+            "Precision":float(precision),
+            "Recall": float(recall),
+            "F1_score": float(f1),
             "labels":lable_mapping
         }
         
@@ -119,6 +135,7 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
                 "model Id" : model_id
             }
         os.makedirs(filepath)
+        config["model_id"] = str(model_id)
         
         X = dataframe.drop(target , axis=1)
         y = dataframe[target]
@@ -155,6 +172,14 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
         mae = mean_absolute_error(y_test , y_pred)
         R2score = r2_score(y_test , y_pred)
         
+        logs_data = {
+            "model_id": str(model_id),
+            "Problem_type": "regression",
+            "dataset_used": str(fn),
+            "target_col": str(target),
+            "created_at": str(date.today())
+        }
+        
         
         try:
             with open(f"{filepath}/model.pkl" , 'wb') as file:
@@ -162,6 +187,9 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
                 
             with open(f"{filepath}/meta_data.json" , 'w' , encoding='utf-8') as json_file:
                 json.dump(config , json_file ,indent=4 , ensure_ascii=False)
+                
+            write_json(logs_data)
+                
 
         except Exception: 
             raise HTTPException(status_code=500 , detail="Some error in saving pkl file or json meta-data")
@@ -169,7 +197,7 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
         
         return {
             "model":"LinearRegressor",
-            "Root mean square error": rmse,
-            "Mean absolute error":mae,
-            "R2 score":R2score
+            "Root mean square error": float(rmse),
+            "Mean absolute error": float(mae),
+            "R2 score": float(R2score)
         }

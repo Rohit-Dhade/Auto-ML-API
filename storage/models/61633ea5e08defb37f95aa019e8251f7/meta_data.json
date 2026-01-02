@@ -1,0 +1,22 @@
+{
+    "Dataset name": "heart.csv",
+    "Target column": "target",
+    "Problem type": "classification",
+    "Categorical features": [],
+    "Numerical features": [
+        "age",
+        "sex",
+        "cp",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal"
+    ],
+    "Algorithm": "RandomForestClassifier"
+}

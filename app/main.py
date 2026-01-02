@@ -1,4 +1,4 @@
-import os ,shutil
+import os ,shutil,json
 from fastapi import FastAPI , File , UploadFile ,HTTPException 
 from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
@@ -58,5 +58,9 @@ async def train_models(item : TrainingEssentials):
     ans = modelTrainingfunc(item_dict)
     return {'msg from model' : ans}
 
-
+@app.get('/ShowTrainedModels')
+def showTrainedModels():
+    with open('storage/models/logs.json' , 'r') as file:
+        file_data = json.load(file)
+        return file_data
     
