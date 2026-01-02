@@ -1,9 +1,10 @@
-import os ,shutil,json
+import os ,shutil,json , joblib
+import pandas as pd
 from fastapi import FastAPI , File , UploadFile ,HTTPException 
 from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
 from pydantic import BaseModel ,Field
-from app.api.pydantic_models import TrainingEssentials
+from app.api.pydantic_models import TrainingEssentials , RequiredForPrediction
 from app.ModelTraining import modelTrainingfunc
 
 dataset_service = DatasetCheck()
@@ -63,4 +64,26 @@ def showTrainedModels():
     with open('storage/models/logs.json' , 'r') as file:
         file_data = json.load(file)
         return file_data
+
+@app.post('/predict')
+def show_prediction(req_data : RequiredForPrediction):
+    req_data_dict = dict(req_data)
+    
+    info_predict = {
+        "TV":64,
+        "Radio":20.24042393,
+        "Social Media":3.921147972,
+        "Influencer":"Micro"
+    }
+    df = pd.DataFrame([info_predict])
+    
+    try:
+        with open(f'storage/models/{req_data_dict["model_id"]}/model.pkl' , 'rb') as file:
+            load_model = joblib.load(file)
+            prediction = load_model.predict(df)
+            return {"prediction" : float(prediction[0])}
+            
+    except Exception as e:
+        raise HTTPException(status_code=500 , detail=str(e))
+        
     
