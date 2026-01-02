@@ -1,0 +1,24 @@
+{
+    "Dataset name": "adult.csv",
+    "Target column": "income",
+    "Problem type": "classification",
+    "Categorical features": [
+        "workclass",
+        "education",
+        "marital.status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native.country"
+    ],
+    "Numerical features": [
+        "age",
+        "fnlwgt",
+        "education.num",
+        "capital.gain",
+        "capital.loss",
+        "hours.per.week"
+    ],
+    "Algorithm": "RandomForestClassifier"
+}

@@ -1,0 +1,14 @@
+{
+    "Dataset name": "dummy_data.csv",
+    "Target column": "Sales",
+    "Problem type": "regression",
+    "Categorical features": [
+        "Influencer"
+    ],
+    "Numerical features": [
+        "TV",
+        "Radio",
+        "Social Media"
+    ],
+    "Algorithm": "LinearRegression"
+}

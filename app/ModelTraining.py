@@ -6,9 +6,11 @@ from app.Ml_Pipeline import model_response_classification , model_response_regre
 
 
 def modelTrainingfunc(requireds: dict):
+    
+    filename = requireds['filename']
 
     try:
-        df = pd.read_csv(f"storage/datasets/{requireds['filename']}")
+        df = pd.read_csv(f"storage/datasets/{filename}")
         cat_columns = []
         numerical_columns = []
         target_col = requireds["target_column"]
@@ -28,12 +30,12 @@ def modelTrainingfunc(requireds: dict):
     if requireds["problem_type"] == "classification":
 
         classification_response = model_response_classification(
-            df, cat_columns, numerical_columns, target_col
+            df, cat_columns, numerical_columns, target_col ,filename
         )
         return classification_response
 
     elif requireds["problem_type"] == "regression":
-        regression_response = model_response_regression(df , cat_columns , numerical_columns , target_col)
+        regression_response = model_response_regression(df , cat_columns , numerical_columns , target_col ,filename)
         return regression_response
 
     else:

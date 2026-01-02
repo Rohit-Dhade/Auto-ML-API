@@ -1,3 +1,5 @@
+import json , hashlib ,os , joblib
+from fastapi import HTTPException
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler , OneHotEncoder , LabelEncoder
@@ -7,7 +9,32 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score , recall_score , precision_score , f1_score , mean_squared_error ,mean_absolute_error , r2_score
 
-def model_response_classification(dataFrame,  categorical_features , numerical_features , target):
+def generate_model_id(config: dict) -> str:
+    config_str = json.dumps(config , sort_keys=True)
+    return hashlib.md5(config_str.encode()).hexdigest()
+    
+
+
+def model_response_classification(dataFrame,  categorical_features , numerical_features , target ,fn):
+    
+        config = {
+            "Dataset name": fn,
+            "Target column":target,
+            "Problem type":"classification",
+            "Categorical features":categorical_features,
+            "Numerical features": numerical_features,
+            "Algorithm":"RandomForestClassifier"
+        }
+        
+        model_id = generate_model_id(config)
+        filepath = f"storage/models/{model_id}"
+        
+        if os.path.exists(filepath):
+            return {
+                "Message":"Model already exists",
+                "model Id" : model_id
+            }
+        os.makedirs(filepath)
 
         X = dataFrame.drop(target , axis=1)
         y = dataFrame[target]
@@ -51,6 +78,16 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
         recall = recall_score(y_test , y_pred)
         precision = precision_score(y_test , y_pred)
         f1 = f1_score(y_test , y_pred)
+        
+        try:
+            with open(f"{filepath}/model.pkl" , 'wb') as file:
+                joblib.dump(model_pipeline , file)
+                
+            with open(f"{filepath}/meta_data.json" , 'w' , encoding='utf-8') as json_file:
+                json.dump(config , json_file ,indent=4 , ensure_ascii=False)
+
+        except Exception: 
+            raise HTTPException(status_code=500 , detail="Some error in saving pkl file or json meta-data")
 
         return {
             "model":"RandomForestClassifier",
@@ -62,18 +99,30 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
         }
         
         
-def model_response_regression(dataframe , categorical_features , numerical_features , target):
+def model_response_regression(dataframe , categorical_features , numerical_features , target ,fn):
+        
+        config = {
+            "Dataset name": fn,
+            "Target column":target,
+            "Problem type":"regression",
+            "Categorical features":categorical_features,
+            "Numerical features": numerical_features,
+            "Algorithm":"LinearRegression"
+        }
+        
+        model_id = generate_model_id(config)
+        filepath = f"storage/models/{model_id}"
+        
+        if os.path.exists(filepath):
+            return {
+                "Message":"Model already exists",
+                "model Id" : model_id
+            }
+        os.makedirs(filepath)
+        
         X = dataframe.drop(target , axis=1)
         y = dataframe[target]
         y_clean = dataframe[target].fillna(dataframe[target].mean())
-
-        # label = LabelEncoder()
-        # y_encoded = label.fit_transform(y)
-
-        # lable_mapping = {
-        #     int(i) : label
-        #     for i, label in enumerate(label.classes_)
-        # }
 
         X_train , X_test , y_train , y_test = train_test_split(X , y_clean , test_size=0.2 , random_state=42)
 
@@ -102,16 +151,22 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
         model_pipeline.fit(X_train , y_train)
         y_pred = model_pipeline.predict(X_test)
         
-        # r2_score = model_pipeline.score(X_test , y_test)
-        # accuracy = accuracy_score(y_test , y_pred)
-        # recall = recall_score(y_test , y_pred)
-        # precision = precision_score(y_test , y_pred)
-        # f1 = f1_score(y_test , y_pred)
-        
         rmse = mean_squared_error(y_test , y_pred)
         mae = mean_absolute_error(y_test , y_pred)
         R2score = r2_score(y_test , y_pred)
+        
+        
+        try:
+            with open(f"{filepath}/model.pkl" , 'wb') as file:
+                joblib.dump(model_pipeline , file)
+                
+            with open(f"{filepath}/meta_data.json" , 'w' , encoding='utf-8') as json_file:
+                json.dump(config , json_file ,indent=4 , ensure_ascii=False)
 
+        except Exception: 
+            raise HTTPException(status_code=500 , detail="Some error in saving pkl file or json meta-data")
+            
+        
         return {
             "model":"LinearRegressor",
             "Root mean square error": rmse,
