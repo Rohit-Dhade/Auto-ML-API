@@ -21,5 +21,6 @@
         "hours.per.week"
     ],
     "Algorithm": "RandomForestClassifier",
-    "model_id": "ad1509a8dc6c776a41a81cdcc5bd1527"
+    "model_id": "ad1509a8dc6c776a41a81cdcc5bd1527",
+    "labels" : {"0": "<=50K", "1": ">50K"}
 }

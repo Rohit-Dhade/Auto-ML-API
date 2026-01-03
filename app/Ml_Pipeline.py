@@ -1,12 +1,14 @@
 import json , hashlib ,os , joblib
 from datetime import date
+import xgboost
 from fastapi import HTTPException
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler , OneHotEncoder , LabelEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestClassifier ,RandomForestRegressor
+from sklearn.linear_model import LinearRegression , LogisticRegression
+from sklearn.svm import SVC , SVR
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score , recall_score , precision_score , f1_score , mean_squared_error ,mean_absolute_error , r2_score
 
@@ -49,7 +51,7 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
         y_encoded = label.fit_transform(y)
 
         lable_mapping = {
-            int(i) : str(label)
+            str(i) : str(label)
             for i, label in enumerate(label.classes_)
         }
 
@@ -71,31 +73,55 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
                 ('cat' , categorical_transformer , categorical_features)
             ]
         )
+        
+        classification_algorithms = [LogisticRegression(max_iter=1000, solver="lbfgs",n_jobs=-1), SVC(kernel="rbf" ,gamma="scale",probability=True),RandomForestClassifier(n_estimators=300 , min_samples_split=5 , min_samples_leaf=2 , max_features="sqrt",n_jobs=-1,random_state=42)]
 
-        model_pipeline = Pipeline(steps=[
-            ('preprocessor' , preprocessor),
-            ('classification' , RandomForestClassifier(random_state=42))
-        ])
+        model_results = []
+        
+        for classifier in classification_algorithms:
+            model_pipeline = Pipeline(steps=[
+                ('preprocessor' , preprocessor),
+                ('classification' , classifier)
+            ])
+            model_pipeline.fit(X_train , y_train)
+            y_pred = model_pipeline.predict(X_test)
+            model_results.append({
+                "model_name":classifier.__class__.__name__,
+                "model":model_pipeline,
+                "Accuracy":model_pipeline.score(X_test , y_test),
+                "F1_score":f1_score(y_test , y_pred , average='weighted'),
+                "Precision": float(precision_score(y_test , y_pred_best , average='weighted')),
+                "Recall":float(recall_score(y_test , y_pred_best , average='weighted'))
+            })
+            
+        best_mode_info = max(model_results , key=lambda x : x["F1_score"])
+        best_model = best_mode_info["model"]
+        
+        y_pred_best = best_model.predict(X_test)
+        
+        final_metrics = {
+            "Accuracy":float(accuracy_score(y_test , y_pred_best)),
+            "Precision": float(precision_score(y_test , y_pred_best , average='weighted')),
+            "Recall":float(recall_score(y_test , y_pred_best , average='weighted')),
+            "F1_score":float(f1_score(y_test , y_pred_best , average='weighted'))
+        }
 
-        model_pipeline.fit(X_train , y_train)
-        y_pred = model_pipeline.predict(X_test)
-        r2_score = model_pipeline.score(X_test , y_test)
-        accuracy = accuracy_score(y_test , y_pred)
-        recall = recall_score(y_test , y_pred)
-        precision = precision_score(y_test , y_pred)
-        f1 = f1_score(y_test , y_pred)
+        config["Algorithm"] = best_mode_info["model_name"]
+        config["labels"] = lable_mapping
         
         logs_data = {
             "model_id": str(model_id),
             "Problem_type": "classification",
             "dataset_used": str(fn),
             "target_col": str(target),
-            "created_at": str(date.today())
+            "created_at": str(date.today()),
+            "labels":lable_mapping
         }
+        
         
         try:
             with open(f"{filepath}/model.pkl" , 'wb') as file:
-                joblib.dump(model_pipeline , file)
+                joblib.dump(best_model , file)
                 
             with open(f"{filepath}/meta_data.json" , 'w' , encoding='utf-8') as json_file:
                 json.dump(config , json_file ,indent=4 , ensure_ascii=False)
@@ -106,11 +132,9 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
             raise HTTPException(status_code=500 , detail="Some error in saving pkl file or json meta-data")
 
         return {
-            "model":"RandomForestClassifier",
-            "Accuracy score":float(accuracy),
-            "Precision":float(precision),
-            "Recall": float(recall),
-            "F1_score": float(f1),
+            "model_id":model_id,
+            "best_model":best_mode_info["model_name"],
+            **final_metrics,
             "labels":lable_mapping
         }
         
@@ -159,6 +183,8 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
                 ('cat' , categorical_transformer , categorical_features)
             ]
         )
+        
+        regression_models = [LinearRegression(n_jobs=-1) , RandomForestRegressor(n_estimators=300,min_samples_split=5,min_samples_leaf=2,random_state=42,n_jobs=-1) , SVR(kernel="rbf", C=10, epsilon=0.1)]
 
         model_pipeline = Pipeline(steps=[
             ('preprocessor' , preprocessor),

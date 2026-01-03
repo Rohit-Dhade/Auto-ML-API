@@ -87,6 +87,7 @@ def show_prediction(req_data : RequiredForPrediction):
     req_data_dict = dict(req_data)
     print("ok till here")
     filepath = f"storage/models/{req_data_dict["model_id"]}/model.pkl"
+    filepath_meta_data = f"storage/models/{req_data_dict["model_id"]}/meta_data.json"
     model_id = req_data_dict["model_id"]
     with open(f"storage/models/{req_data_dict["model_id"]}/meta_data.json" , 'r') as file:
         pr = json.load(file)["Problem type"]
@@ -94,7 +95,7 @@ def show_prediction(req_data : RequiredForPrediction):
     print()
         
     if pr == 'classification':
-        return classification_prediction(filepath , req_data_dict["data"])
+        return classification_prediction(filepath , req_data_dict["data"] , filepath_meta_data)
     elif pr == 'regression':
         return regression_prediction(filepath , req_data_dict["data"])
     
