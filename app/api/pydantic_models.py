@@ -9,4 +9,11 @@ class TrainingEssentials(BaseModel):
 
 class RequiredForPrediction(BaseModel):
     model_id : Annotated[str , Field(... , description="Enter the exact the model id")]
+    data : Annotated[dict , Field(..., description="Enter the valid data")]
     
+    
+class DataForRegression(BaseModel):
+    TV : Annotated[int , Field(... , description="Enter the TV value")]
+    Radio :  Annotated[float , Field(..., description="Enter the radio value")]
+    Social_Media : Annotated[float , Field(..., description="Enter the value")]
+    Influencer : Literal["Micro" , "Mega" , "Nano"]

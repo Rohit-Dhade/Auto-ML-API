@@ -1,11 +1,13 @@
 import os ,shutil,json , joblib
 import pandas as pd
+import statsmodels.api as sm
 from fastapi import FastAPI , File , UploadFile ,HTTPException 
 from typing import Annotated
 from app.services.dataset import (DatasetCheck , InvalidDatasetError , DatasetAlreadyExists)
 from pydantic import BaseModel ,Field
-from app.api.pydantic_models import TrainingEssentials , RequiredForPrediction
+from app.api.pydantic_models import TrainingEssentials , RequiredForPrediction, DataForRegression
 from app.ModelTraining import modelTrainingfunc
+from app.api.dataset_routes import regression_prediction , classification_prediction
 
 dataset_service = DatasetCheck()
 app = FastAPI()
@@ -68,22 +70,19 @@ def showTrainedModels():
 @app.post('/predict')
 def show_prediction(req_data : RequiredForPrediction):
     req_data_dict = dict(req_data)
+    filepath = f"storage/models/{req_data_dict["model_id"]}/model.pkl"
+    model_id = req_data_dict["model_id"]
+    with open(f"storage/models/{req_data_dict["model_id"]}/meta_data.json" , 'r') as file:
+        pr = json.load(file)["Problem type"]
     
-    info_predict = {
-        "TV":64,
-        "Radio":20.24042393,
-        "Social Media":3.921147972,
-        "Influencer":"Micro"
-    }
-    df = pd.DataFrame([info_predict])
+    print()
+        
+    if pr == 'classification':
+        return classification_prediction(filepath , req_data_dict["data"])
+    elif pr == 'regression':
+        return regression_prediction(filepath , req_data_dict["data"])
     
-    try:
-        with open(f'storage/models/{req_data_dict["model_id"]}/model.pkl' , 'rb') as file:
-            load_model = joblib.load(file)
-            prediction = load_model.predict(df)
-            return {"prediction" : float(prediction[0])}
-            
-    except Exception as e:
-        raise HTTPException(status_code=500 , detail=str(e))
+    
+
         
     
