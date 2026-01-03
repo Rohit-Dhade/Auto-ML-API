@@ -63,9 +63,17 @@ async def train_models(item : TrainingEssentials):
 
 @app.get('/ShowTrainedModels')
 def showTrainedModels():
-    with open('storage/models/logs.json' , 'r') as file:
-        file_data = json.load(file)
-        return file_data
+    dir_list = []
+    path = 'storage/models'
+    for entry in os.listdir(path):
+        full_path = os.path.join(path , entry)
+        if os.path.isdir(full_path):
+            dir_list.append(entry)
+            
+    models_list = []
+    for model in dir_list:
+        with open(f'storage/models/{model}/meta_data.json' , 'r') as file:
+            print(dict(file))
 
 @app.post('/predict')
 def show_prediction(req_data : RequiredForPrediction):
