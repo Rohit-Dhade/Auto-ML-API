@@ -73,7 +73,14 @@ def showTrainedModels():
     models_list = []
     for model in dir_list:
         with open(f'storage/models/{model}/meta_data.json' , 'r') as file:
-            print(dict(file))
+            models_list.append({f"{model}" : json.load(file)})
+            
+    return models_list
+
+@app.get('/ShowMetaData')
+def show_meta_data(model_id : str):
+    with open(f'storage/models/{model_id}/meta_data.json' , 'r') as file:
+            return json.load(file)
 
 @app.post('/predict')
 def show_prediction(req_data : RequiredForPrediction):
@@ -92,6 +99,15 @@ def show_prediction(req_data : RequiredForPrediction):
         return regression_prediction(filepath , req_data_dict["data"])
     
     
+@app.delete('/deleteModel')
+def delete_model(model_id : str):
+    dirPath = f'storage/models/{model_id}'
+    try:
+        shutil.rmtree(dirPath)
+        return {"response" : "Deleted Successfully"}
+
+    except Exception:
+        raise HTTPException(status_code=500 , detail="Model with given id does not exist")
 
         
     
