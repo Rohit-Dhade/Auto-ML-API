@@ -6,7 +6,7 @@ from app.api.pydantic_models import DataForRegression
 def regression_prediction(filepath , info_predict):
     
     df = pd.DataFrame([info_predict])
-    
+    print("ok till here")
     try:
         with open(filepath, 'rb') as file:
             load_model = joblib.load(file)

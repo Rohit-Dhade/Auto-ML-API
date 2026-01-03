@@ -1,0 +1,18 @@
+{
+    "Dataset name": "energy.csv",
+    "Target column": "Production",
+    "Problem type": "regression",
+    "Categorical features": [
+        "Source",
+        "Day_Name",
+        "Month_Name",
+        "Season"
+    ],
+    "Numerical features": [
+        "Start_Hour",
+        "End_Hour",
+        "Day_of_Year"
+    ],
+    "Algorithm": "LinearRegression",
+    "model_id": "bddf925691b5de13a496066a748658b4"
+}

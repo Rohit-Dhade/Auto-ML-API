@@ -19,5 +19,33 @@
         "dataset_used": "heart.csv",
         "target_col": "target",
         "created_at": "2026-01-02"
+    },
+    {
+        "model_id": "42811e3b3ed6ee71bfe7a350da880d4f",
+        "Problem_type": "regression",
+        "dataset_used": "energy.csv",
+        "target_col": "Production",
+        "created_at": "2026-01-03"
+    },
+    {
+        "model_id": "42811e3b3ed6ee71bfe7a350da880d4f",
+        "Problem_type": "regression",
+        "dataset_used": "energy.csv",
+        "target_col": "Production",
+        "created_at": "2026-01-03"
+    },
+    {
+        "model_id": "3ded5341785d49e9022bc555393e83b7",
+        "Problem_type": "regression",
+        "dataset_used": "energy.csv",
+        "target_col": "Production",
+        "created_at": "2026-01-03"
+    },
+    {
+        "model_id": "bddf925691b5de13a496066a748658b4",
+        "Problem_type": "regression",
+        "dataset_used": "energy.csv",
+        "target_col": "Production",
+        "created_at": "2026-01-03"
     }
 ]

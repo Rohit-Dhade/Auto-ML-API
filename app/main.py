@@ -70,6 +70,7 @@ def showTrainedModels():
 @app.post('/predict')
 def show_prediction(req_data : RequiredForPrediction):
     req_data_dict = dict(req_data)
+    print("ok till here")
     filepath = f"storage/models/{req_data_dict["model_id"]}/model.pkl"
     model_id = req_data_dict["model_id"]
     with open(f"storage/models/{req_data_dict["model_id"]}/meta_data.json" , 'r') as file:
