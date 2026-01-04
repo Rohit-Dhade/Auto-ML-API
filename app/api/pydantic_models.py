@@ -9,7 +9,7 @@ class TrainingEssentials(BaseModel):
 
 class RequiredForPrediction(BaseModel):
     model_id : Annotated[str , Field(... , description="Enter the exact the model id")]
-    data : Annotated[dict , Field(..., description="Enter the valid data")]
+    data : Annotated[dict | list[dict] , Field(..., description="Enter the valid data")]
     
     
 class DataForRegression(BaseModel):

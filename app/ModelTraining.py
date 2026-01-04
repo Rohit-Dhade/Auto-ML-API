@@ -42,9 +42,7 @@ def modelTrainingfunc(requireds: dict):
 
     try:
         d = pd.read_csv(f"storage/datasets/{filename}")
-        
         df = detect_date_columns(d)
-        print(df)
         cat_columns = []
         numerical_columns = []
         target_col = requireds["target_column"]
@@ -59,7 +57,7 @@ def modelTrainingfunc(requireds: dict):
             else:
                 numerical_columns.append(col)
                 
-        print(numerical_columns , cat_columns)
+        # print(numerical_columns , cat_columns)
         
     except InvalidDatasetError as e:
         raise HTTPException(status_code=400, detail=str(e))

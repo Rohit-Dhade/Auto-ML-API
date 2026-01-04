@@ -97,7 +97,7 @@ def show_prediction(req_data : RequiredForPrediction):
     if pr == 'classification':
         return classification_prediction(filepath , req_data_dict["data"] , filepath_meta_data)
     elif pr == 'regression':
-        return regression_prediction(filepath , req_data_dict["data"])
+        return regression_prediction(filepath , req_data_dict["data"] , filepath_meta_data)
     
     
 @app.delete('/deleteModel')
