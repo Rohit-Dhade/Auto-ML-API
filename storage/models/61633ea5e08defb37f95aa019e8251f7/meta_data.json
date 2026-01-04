@@ -19,5 +19,9 @@
         "thal"
     ],
     "Algorithm": "RandomForestClassifier",
-    "labels" : {"0":0 , "1":1}
+    "model_id": "61633ea5e08defb37f95aa019e8251f7",
+    "labels": {
+        "0": "0",
+        "1": "1"
+    }
 }

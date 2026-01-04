@@ -1,5 +1,4 @@
 {
-    
     "Dataset name": "dummy_data.csv",
     "Target column": "Sales",
     "Problem type": "regression",
@@ -11,6 +10,6 @@
         "Radio",
         "Social Media"
     ],
-    "Algorithm": "LinearRegression",
+    "Algorithm": "SVR",
     "model_id": "3e0adabe3f28bae48d078acffcef6f7e"
 }

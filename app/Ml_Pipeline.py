@@ -42,7 +42,8 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
                 "Message":"Model already exists",
                 "model Id" : model_id
             }
-        os.makedirs(filepath)
+        os.makedirs(filepath , exist_ok=True)
+        config["model_id"] = str(model_id)
 
         X = dataFrame.drop(target , axis=1)
         y = dataFrame[target]
@@ -90,8 +91,8 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
                 "model":model_pipeline,
                 "Accuracy":model_pipeline.score(X_test , y_test),
                 "F1_score":f1_score(y_test , y_pred , average='weighted'),
-                "Precision": float(precision_score(y_test , y_pred_best , average='weighted')),
-                "Recall":float(recall_score(y_test , y_pred_best , average='weighted'))
+                "Precision": float(precision_score(y_test , y_pred , average='weighted')),
+                "Recall":float(recall_score(y_test , y_pred , average='weighted'))
             })
             
         best_mode_info = max(model_results , key=lambda x : x["F1_score"])
@@ -158,7 +159,7 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
                 "Message":"Model already exists",
                 "model Id" : model_id
             }
-        os.makedirs(filepath)
+        os.makedirs(filepath ,exist_ok=True)
         config["model_id"] = str(model_id)
         
         X = dataframe.drop(target , axis=1)
@@ -183,20 +184,38 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
                 ('cat' , categorical_transformer , categorical_features)
             ]
         )
-        
+        model_results = []
         regression_models = [LinearRegression(n_jobs=-1) , RandomForestRegressor(n_estimators=300,min_samples_split=5,min_samples_leaf=2,random_state=42,n_jobs=-1) , SVR(kernel="rbf", C=10, epsilon=0.1)]
 
-        model_pipeline = Pipeline(steps=[
-            ('preprocessor' , preprocessor),
-            ('regression' , LinearRegression())
-        ])
-
-        model_pipeline.fit(X_train , y_train)
-        y_pred = model_pipeline.predict(X_test)
+        for regressor in regression_models:
+            model_pipeline = Pipeline(steps=[
+                ('preprocessor' , preprocessor),
+                ('regression' , regressor)
+            ])
+            
+            model_pipeline.fit(X_train , y_train)
+            y_pred = model_pipeline.predict(X_test)
+            
+            model_results.append({
+                "model_name":regressor.__class__.__name__,
+                "model":model_pipeline,
+                "Mean squared error": mean_squared_error(y_test , y_pred),
+                "Mean absolute error": mean_absolute_error(y_test , y_pred),
+                "r2_score":r2_score(y_test , y_pred)
+            })
+            
+        best_model_info = max(model_results , key=lambda x : x["Mean squared error"])
+        best_model = best_model_info["model"]
         
-        rmse = mean_squared_error(y_test , y_pred)
-        mae = mean_absolute_error(y_test , y_pred)
-        R2score = r2_score(y_test , y_pred)
+        y_pred_best = best_model.predict(X_test)
+
+        final_metrics = {
+            "Mean squared error": mean_squared_error(y_test , y_pred_best),
+            "Mean absolute error": mean_absolute_error(y_test , y_pred_best),
+            "r2_score":r2_score(y_test , y_pred_best)
+        }
+        
+        config["Algorithm"] = best_model_info["model_name"]
         
         logs_data = {
             "model_id": str(model_id),
@@ -222,8 +241,7 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
             
         
         return {
-            "model":"LinearRegressor",
-            "Root mean square error": float(rmse),
-            "Mean absolute error": float(mae),
-            "R2 score": float(R2score)
+            "model_id":model_id,
+            "best_model":best_model_info["model_name"],
+            **final_metrics,
         }
