@@ -1,26 +1,12 @@
 import React from 'react'
-import { useEffect ,useState} from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const SingleCardModel = () => {
-  
-  const [meta_data, setmeta_data] = useState([])
+const SingleCardModel = ({ info }) => {
 
-  useEffect(() => {
-    const getdata = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/ShowMetaData?model_id=3e0adabe3f28bae48d078acffcef6f7e")
-        setmeta_data(prev => {prev , response.data})
-        console.log(meta_data);
-      } catch (err) {
-        console.log(err.response?.data || err.message);
-      }
-    };
-    getdata();
-  },[]);
 
   return (
-    <div className='h-full w-[30%] border-2 rounded-2xl bg-black relative overflow-hidden transition-all duration-300 hover:scale-105 ease-out hover:shadow-2xl'>
+    <div className='h-full w-[30%] border-2 rounded-2xl bg-black relative shrink-0 no-scrollbar overflow-hidden transition-all duration-300 hover:scale-105 ease-out hover:shadow-2xl'>
       <div className="absolute inset-y-0 left-0 h-[25%] top-5 w-full
                   bg-linear-to-r
                   from-emerald-500 blur-2xl to-transparent">
@@ -29,9 +15,9 @@ const SingleCardModel = () => {
       <div className='absolute z-10 text-white w-full flex flex-col gap-2 h-full'>
 
         <div className='flex flex-col mt-3  w-full pl-2 gap-2'>
-          <div style={{ font: "Helvetica" }}>Dataset Name : dummy_data.csv</div>
-          <div>Target column : income</div>
-          <div>Problem type : regression</div>
+          <div style={{ font: "Helvetica" }}>Dataset Name : {info["Dataset name"]}</div>
+          <div>Target column : {info["Target column"]}</div>
+          <div>Problem type : {info["Problem type"]}</div>
         </div>
 
         <div className='flex w-full items-center justify-center gap-9 h-[47%]'>
@@ -54,8 +40,8 @@ const SingleCardModel = () => {
         </div>
 
         <div className='flex flex-col mt-2 pl-2 gap-2'>
-          <span>Algorithm : LinearRegression</span>
-          <span>Model_id : 29834h837dby723t6gd263ggf63</span>
+          <span>Algorithm : {info["Algorithm"]}</span>
+          <span>Model_id : {info["model_id"]}</span>
         </div>
 
       </div>
