@@ -22,3 +22,15 @@
   font-family: "Helvetica";
   src: url('./assets/fonts/helvetica-light-587ebe5a59211.ttf') format('opentype');
 }
+
+.pt-sans-regular {
+  font-family: "Saira", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pt-sans-bold {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
