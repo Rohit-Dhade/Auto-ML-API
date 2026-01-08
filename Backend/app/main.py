@@ -44,7 +44,7 @@ async def create_upload_file(file : UploadFile = File(...)):
             summary = dataset_service.UploadDatasets(filename = file.filename , filepath= file_path)
 
             return {
-                "message":"File uploaded Successfully",
+                "detail":"File uploaded Successfully",
                 "dataset":summary
             }
 
