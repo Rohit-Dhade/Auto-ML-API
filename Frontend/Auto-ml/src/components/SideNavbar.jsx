@@ -68,12 +68,12 @@ const SideNavbar = () => {
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'> Train ML Models</div>
                             </div>
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            {/* <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <ImLibreoffice size={20} />
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'> Show Models</div>
-                            </div>
+                            </div> */}
                             <div onClick={()=>setmeta(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <MdDataObject size={20} />
