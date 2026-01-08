@@ -77,14 +77,6 @@ const ShowMetaData = ({ onClose }) => {
                                 {data["labels"] && <span className='pt-sans-bold'>:  {`{ 0 - "${data["labels"]["0"]}" , 1 - "${data["labels"]["1"]}" }`}</span>}
                             </div>
 
-                            {/* <h2>{data["Algorithm"]}</h2>
-                            <h2>{data["Target column"]}</h2>
-                            <h2>{data["Problem type"]}</h2>
-                            <h2>{data["Categorical features"]}</h2>
-                            <h2>{data["Numerical features"]}</h2>
-                            <h2>{data["Algorithm"]}</h2>
-                            <h2>{data["model_id"]}</h2> */}
-
                         </div>
                     )}
 

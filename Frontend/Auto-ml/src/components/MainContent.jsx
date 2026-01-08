@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SingleCardModel from './SingleCardModel'
 import axios from 'axios';
+import bgVideo from '../assets/bg.mp4'
 
 const MainContent = () => {
 
@@ -42,21 +43,50 @@ const MainContent = () => {
     }, [modelid]);
 
     return (
-        <div className='bg-white h-full w-full rounded-l-3xl flex flex-col gap-2'>
-            <div className='heading flex items-center justify-between mt-3 pr-5 h-[8%] w-full'>
-                <span style={{ fontFamily: "NeueMachina", fontSize: "40px" }} className='pl-4 font-bold'>Dashboard</span>
-                <span style={{ fontFamily: "NeueMachina" }} className='border-2 flex items-center justify-center text-[18px] w-[20%] rounded-2xl bg-black text-white h-[90%]'>Train. Save. Predict.</span>
+        <div className="relative h-full w-full rounded-l-3xl overflow-hidden">
+
+            <div className="absolute inset-0 z-0">
+                <video
+                    src={bgVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover brightness-90 contrast-100 saturate-95"
+                />
+                <div className="absolute inset-0 bg-black/10" />
             </div>
-            <div style={{ font: "Helvetica", fontSize: "20px" }} className='pl-9'>Models Train so far.</div>
-            <div className='h-[55%] flex items-center justify-center gap-6 overflow-y-auto overflow-x-auto  no-scrollbar flex-nowrap'>
-                <div className='w-[95%] h-full flex overflow-auto gap-10 items-center no-scrollbar px-4 scroll-smooth'>
-                    {meta_data.map((item, index) => (
-                        <SingleCardModel info={item} key={index} />
-                    ))}
+
+            <div className="relative z-10 flex flex-col h-full">
+
+                <div className="flex items-center justify-between px-6 pt-4 h-[10%]">
+                    <span
+                        style={{ fontFamily: "NeueMachina", fontSize: "40px" }}
+                        className="font-bold text-white"
+                    >
+                        Dashboard
+                    </span>
+
+                    <span
+                        style={{ fontFamily: "NeueMachina" }}
+                        className="border border-white/40 px-6 py-2 rounded-2xl bg-black/60 text-white text-lg"
+                    >
+                        Train. Save. Predict.
+                    </span>
                 </div>
+
+                <div
+                    style={{ fontFamily: "Helvetica" }}
+                    className="px-6 text-lg text-white/80 mb-4"
+                >
+                    Models trained so far
+                </div>
+
+                <div className='z-10 h-[55%] flex items-center justify-center gap-6 overflow-y-auto overflow-x-auto no-scrollbar flex-nowrap'> <div className='w-[95%] h-full flex overflow-auto gap-10 items-center no-scrollbar px-4 scroll-smooth'> {meta_data.map((item, index) => (<SingleCardModel info={item} key={index} />))} </div> </div>
+
             </div>
         </div>
-    )
+    );
 }
 
 export default MainContent 

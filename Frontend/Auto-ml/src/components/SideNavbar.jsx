@@ -12,11 +12,15 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import SingleDataset from './SingleDataset';
 import ListDataset from './ListDataset';
 import ShowMetaData from './ShowMetaData';
+import UploadFileModal from './UploadFileModal';
+import DeleteDatasetModal from './DeleteDatasetModal';
 
 
 const SideNavbar = () => {
     const [Show, setShow] = useState(false)
     const [meta, setmeta] = useState(false)
+    const [filesupload, setfilesupload] = useState(false)
+    const [deleteDataset, setdeleteDataset] = useState(false)
 
     return (
         <>
@@ -43,7 +47,7 @@ const SideNavbar = () => {
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'>Dashboard</div>
                             </div>
 
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            <div onClick={() => setfilesupload(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <FaUpload size={20} />
                                 </div>
@@ -56,7 +60,7 @@ const SideNavbar = () => {
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'> List Datasets</div>
                             </div>
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            <div onClick={()=>setdeleteDataset(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <MdDeleteOutline size={20} />
                                 </div>
@@ -114,6 +118,8 @@ const SideNavbar = () => {
 
             {Show && <ListDataset onClose={()=>setShow(false)}/>}
             {meta && <ShowMetaData onClose={()=>setmeta(false)}/>}
+            {filesupload && <UploadFileModal onClose={()=>setfilesupload(false)}/>}
+            {deleteDataset && <DeleteDatasetModal onClose={()=>setdeleteDataset(false)}/>}
         </>
 
     )
