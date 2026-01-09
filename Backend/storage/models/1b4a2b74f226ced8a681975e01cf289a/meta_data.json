@@ -1,0 +1,21 @@
+{
+    "Dataset name": "winequality.csv",
+    "Target column": "quality",
+    "Problem type": "regression",
+    "Categorical features": [],
+    "Numerical features": [
+        "fixed acidity",
+        "volatile acidity",
+        "citric acid",
+        "residual sugar",
+        "chlorides",
+        "free sulfur dioxide",
+        "total sulfur dioxide",
+        "density",
+        "pH",
+        "sulphates",
+        "alcohol"
+    ],
+    "Algorithm": "LinearRegression",
+    "model_id": "1b4a2b74f226ced8a681975e01cf289a"
+}

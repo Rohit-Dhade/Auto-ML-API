@@ -34,5 +34,23 @@
         "dataset_used": "energy.csv",
         "target_col": "Production",
         "created_at": "2026-01-04"
+    },
+    {
+        "model_id": "1b4a2b74f226ced8a681975e01cf289a",
+        "Problem_type": "regression",
+        "dataset_used": "winequality.csv",
+        "target_col": "quality",
+        "created_at": "2026-01-09"
+    },
+    {
+        "model_id": "02f8dc6b7dc54bbe125f4a8b0b753fd7",
+        "Problem_type": "classification",
+        "dataset_used": "loan.csv",
+        "target_col": "loan_status",
+        "created_at": "2026-01-09",
+        "labels": {
+            "0": "Approved",
+            "1": "Denied"
+        }
     }
 ]

@@ -134,6 +134,7 @@ def model_response_classification(dataFrame,  categorical_features , numerical_f
 
         return {
             "model_id":model_id,
+            "problem_type":"classification",
             "best_model":best_mode_info["model_name"],
             **final_metrics,
             "labels":lable_mapping
@@ -210,8 +211,8 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
         y_pred_best = best_model.predict(X_test)
 
         final_metrics = {
-            "Mean squared error": mean_squared_error(y_test , y_pred_best),
-            "Mean absolute error": mean_absolute_error(y_test , y_pred_best),
+            "Mean_squared_error": mean_squared_error(y_test , y_pred_best),
+            "Mean_absolute_error": mean_absolute_error(y_test , y_pred_best),
             "r2_score":r2_score(y_test , y_pred_best)
         }
         
@@ -242,6 +243,7 @@ def model_response_regression(dataframe , categorical_features , numerical_featu
         
         return {
             "model_id":model_id,
+            "problem_type":"regression",
             "best_model":best_model_info["model_name"],
             **final_metrics,
         }
