@@ -32,7 +32,7 @@ const ListDataset = ({ onClose }) => {
     }, [])
 
     return (
-        <div className='fixed inset-0 bg-black/40 backdrop-blur-2xl w-full h-screen flex items-center justify-center z-100'>
+        <div className='fixed inset-0 bg-black/10 backdrop-blur-sm w-full h-screen flex items-center justify-center z-100'>
             <div className={`relative bg-gray-200 h-[75%] w-[50%] shadow-2xl rounded-4xl py-4 transform transition-all duration-1000 ease-initial ${move ? "translate-x-0" : "-translate-x-[50%]"}`}>
                 <button className='absolute right-7 top-5 flex items-center text-3xl' onClick={onClose}><GrClose size={20} /></button>
                 <div style={{ fontFamily: "NeueMachina" }} className='flex items-center justify-center text-3xl'>Lists of Datasets</div>

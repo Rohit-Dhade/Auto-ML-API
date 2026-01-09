@@ -6,7 +6,7 @@ const SingleCardModel = ({ info }) => {
 
 
   return (
-    <div className='pt-sans-regular h-[95%] w-[33%] border border-gray-400 rounded-2xl bg-black relative shrink-0 no-scrollbar overflow-hidden transition-all duration-300 hover:scale-105 ease-out hover:shadow-2xl'>
+    <div className='pt-sans-regular h-[85%] w-[33%] border border-gray-400 rounded-2xl bg-black relative shrink-0 no-scrollbar overflow-hidden transition-all duration-300 hover:scale-110 ease-out hover:shadow-2xl'>
       <div className="absolute inset-y-0 left-0 h-[25%] top-5 w-full
                   bg-linear-to-r
                   from-green-800 blur-2xl to-transparent">

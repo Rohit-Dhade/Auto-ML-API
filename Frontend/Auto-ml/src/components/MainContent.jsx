@@ -82,7 +82,7 @@ const MainContent = () => {
                     Models trained so far
                 </div>
 
-                <div className='z-10 h-[55%] flex items-center justify-center gap-6 overflow-y-auto overflow-x-auto no-scrollbar flex-nowrap'> <div className='w-[95%] h-full flex overflow-auto gap-10 items-center no-scrollbar px-4 scroll-smooth'> {meta_data.map((item, index) => (<SingleCardModel info={item} key={index} />))} </div> </div>
+                <div className='z-10 h-[70%] flex items-center justify-center gap-6 overflow-y-auto overflow-x-auto no-scrollbar flex-nowrap'> <div className='w-[95%] h-full flex overflow-auto gap-10 items-center no-scrollbar px-5 scroll-smooth'> {meta_data.map((item, index) => (<SingleCardModel info={item} key={index} />))} </div> </div>
 
             </div>
         </div>

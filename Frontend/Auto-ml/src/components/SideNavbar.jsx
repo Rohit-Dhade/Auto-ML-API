@@ -26,7 +26,7 @@ const SideNavbar = () => {
         <>
             <div className="relative h-screen w-full bg-black">
 
-                <div className="absolute inset-y-0 left-0 h-[20%] top-150 w-[90%]
+                <div className="absolute inset-y-0 left-0 h-[20%] top-143 w-full
                   bg-linear-to-r
                   from-green-900 blur-2xl to-transparent">
                 </div>
