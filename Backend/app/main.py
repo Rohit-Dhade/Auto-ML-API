@@ -60,8 +60,7 @@ async def create_upload_file(file : UploadFile = File(...)):
 @app.post('/deleteFile/{filename}')
 async def deleteFile(filename : str):
     # fileDict = {"filename":filename}
-    dataset_service.remove_file(filename)
-    return {"message" : "Files deleted successfully"}
+    return dataset_service.remove_file(filename)
 
             
 @app.post('/train')
