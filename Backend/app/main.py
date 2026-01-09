@@ -135,7 +135,7 @@ def delete_model(model_id: str):
 
     except Exception:
         raise HTTPException(
-            status_code=500, detail="Model with given id does not exist"
+            status_code=400, detail="Model with given id does not exist"
         )
 
 
