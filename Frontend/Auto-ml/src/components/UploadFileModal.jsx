@@ -1,8 +1,7 @@
 import React from 'react'
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import { FaUsersSlash } from 'react-icons/fa6';
-import axios from 'axios';
+import api from '../api/axios'
 
 const UploadFileModal = ({ onClose }) => {
     const [move, setmove] = useState(false)
@@ -27,7 +26,7 @@ const UploadFileModal = ({ onClose }) => {
         )
 
         try{
-            const response = await axios.post("http://127.0.0.1:8000/uploadfile/" , formdata , {headers:{"Content":"multipart/form-data",},});
+            const response = await api.post("/uploadfile/" , formdata , {headers:{"Content":"multipart/form-data",},});
             setfilestatus(response.data);
         }catch(err){
             setfilestatus(err.response.data);

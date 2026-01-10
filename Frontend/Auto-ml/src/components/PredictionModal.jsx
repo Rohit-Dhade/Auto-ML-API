@@ -1,8 +1,7 @@
 import React from 'react'
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import { FaUsersSlash } from 'react-icons/fa6';
-import axios from 'axios';
+import api from '../api/axios'
 
 const PredictionModal = ({ onClose }) => {
     const [move, setmove] = useState(false)
@@ -22,7 +21,7 @@ const PredictionModal = ({ onClose }) => {
             data:JSON.parse(predictdata)
         }
         try{
-            const response = await axios.post("http://127.0.0.1:8000/predict" , payload)
+            const response = await api.post("/predict" , payload)
             setPrediction(response.data);
         }catch(err){
             console.log(err);

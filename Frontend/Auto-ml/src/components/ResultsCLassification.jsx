@@ -1,7 +1,7 @@
 import React from 'react'
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axios'
 
 const ResultsCLassification = ({ onClose ,info }) => {
     const [move, setmove] = useState(false)

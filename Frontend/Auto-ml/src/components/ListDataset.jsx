@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SingleDataset from './SingleDataset'
 import { GrClose } from "react-icons/gr";
-import axios from 'axios';
+import api from '../api/axios'
 
 const ListDataset = ({ onClose }) => {
     const [listdataset, setlistdataset] = useState([])
@@ -9,12 +9,10 @@ const ListDataset = ({ onClose }) => {
     useEffect(() => {
         const listdatasets = async () => {
             try {
-                const response = await axios.get(
-                    "http://127.0.0.1:8000/filesUploaded"
-                )
+                const response = await api.get("/filesUploaded")
                 // const mdId = response.data.map(item => item.model_id)
                 setlistdataset(response.data.datasets);
-                // console.log(response.data);
+                
 
             } catch (err) {
                 console.error(err.response?.data || err.message);

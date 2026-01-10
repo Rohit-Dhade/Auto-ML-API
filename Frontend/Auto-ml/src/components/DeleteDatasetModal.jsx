@@ -1,7 +1,7 @@
 import React from 'react'
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axios'
 
 const DeleteDatasetModal = ({ onClose }) => {
     const [move, setmove] = useState(false)
@@ -19,7 +19,7 @@ const DeleteDatasetModal = ({ onClose }) => {
     const DeleteDataset = async () => {
         if(!deleteddataset) return(alert("Enter the dataset file name."))
         try{
-            const response = await axios.post(`http://127.0.0.1:8000/deleteFile/${deleteddataset}`)
+            const response = await api.post(`/${deleteddataset}`)
             setdeleteresponse(response.data)
         }catch(err){
             console.log(err)

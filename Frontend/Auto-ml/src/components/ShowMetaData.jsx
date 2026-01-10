@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { GrClose } from "react-icons/gr";
-import axios from 'axios'
+import api from '../api/axios'
 
 const ShowMetaData = ({ onClose }) => {
     const [state, setstate] = useState(false)
@@ -14,7 +14,7 @@ const ShowMetaData = ({ onClose }) => {
         if (!inpValue) return (alert("Enter the model id"))
         setloading(true)
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/ShowMetaData?model_id=${inpValue}`)
+            const response = await api.get(`/ShowMetaData?model_id=${inpValue}`)
             console.log(response.data);
             setdata(response.data)
         } catch (err) {

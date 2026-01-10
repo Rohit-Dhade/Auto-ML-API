@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SingleCardModel from './SingleCardModel'
-import axios from 'axios';
+import api from '../api/axios'
 import bgVideo from '../assets/bg.mp4'
 
 const MainContent = () => {
@@ -11,8 +11,8 @@ const MainContent = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await axios.get(
-                    "http://127.0.0.1:8000/logs"
+                const response = await api.get(
+                    "/logs"
                 )
                 const mdId = response.data.map(item => item.model_id)
                 setmodelid(mdId);
@@ -28,7 +28,7 @@ const MainContent = () => {
         const metadata = async () => {
             if (modelid === 0) return;
             try {
-                const request = modelid.map(id => axios.get(`http://127.0.0.1:8000/ShowMetaData?model_id=${id}`))
+                const request = modelid.map(id => api.get(`/ShowMetaData?model_id=${id}`))
                 const responses = await Promise.all(request)
 
                 const metaD = responses.map(item => item.data)

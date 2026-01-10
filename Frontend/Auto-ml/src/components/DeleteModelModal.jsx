@@ -1,8 +1,7 @@
 import React from 'react'
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import { FaUsersSlash } from 'react-icons/fa6';
-import axios from 'axios';
+import api from '../api/axios'
 
 const DeleteModelModal = ({ onClose }) => {
     const [move, setmove] = useState(false)
@@ -18,7 +17,7 @@ const DeleteModelModal = ({ onClose }) => {
 
     const DeleteModel = async () =>{
         try{
-            const response = await axios.delete(`http://127.0.0.1:8000/deleteModel?model_id=${modelid}`)
+            const response = await api.delete(`/deleteModel?model_id=${modelid}`)
             setstatus(response.data.response)
         }catch(err){
             setstatus(err.response.data["detail"]);

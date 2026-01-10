@@ -1,6 +1,6 @@
 import { GrClose } from "react-icons/gr";
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axios'
 import ResultsCLassification from "./ResultsCLassification";
 import ResultsRegression from "./ResultsRegression";
 
@@ -30,7 +30,7 @@ const ModelTrainModal = ({ onClose }) => {
         };
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/train', payload)
+            const response = await api.post('/train', payload)
             settrainresponse(response.data)
             if(response.data["msg from model"].problem_type === "regression"){
                 setisRegression(true);
