@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from app.services.dataset import InvalidDatasetError
+from app.dataset import InvalidDatasetError
 from fastapi import HTTPException
 from app.Ml_Pipeline import model_response_classification , model_response_regression
 
