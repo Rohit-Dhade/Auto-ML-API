@@ -32,7 +32,15 @@ os.makedirs(upload_dir, exist_ok=True)
 
 @app.get("/")
 def root():
-    return {"msg": "hello world from fastAPI"}
+    return {
+        "status": "ok",
+        "service": "auto-ml-api",
+        "message": "Service is running "
+    }
+    
+@app.get('/health')
+def health_check():
+    return {"status" : "healthy"}
 
 
 @app.get("/filesUploaded")
