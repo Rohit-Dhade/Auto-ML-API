@@ -138,10 +138,7 @@ def delete_model(model_id: str):
         raise HTTPException(
             status_code=400, detail="Model with given id does not exist"
         )
-        
-   
-
-
+    
 @app.get("/logs")
 def show_logs():
     with open("storage/models/logs.json", "r") as file:
