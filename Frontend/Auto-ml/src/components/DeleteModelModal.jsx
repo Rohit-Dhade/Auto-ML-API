@@ -35,7 +35,7 @@ const DeleteModelModal = ({ onClose }) => {
                         <div className='bg-white w-full mt-6 h-[20%] flex items-center justify-center rounded-2xl'>
                             <input
                                 type="text"
-                                className="h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 cursor-pointer" placeholder='Enter Model Id' onChange={(e)=> setmodelid(e.target.value)}
+                                className="h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 cursor-pointer" placeholder='Enter Model Id' spellCheck={false} onChange={(e)=> setmodelid(e.target.value)}
                             />
                         </div>
                         <button type='button' onClick={DeleteModel} className='pt-sans-bold bg-green-500 w-[30%] h-[15%] text-2xl rounded-2xl active:scale-95 transition-all duration-300 ease-in-out tracking-wide'>Delete</button>

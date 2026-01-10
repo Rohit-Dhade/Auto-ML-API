@@ -39,10 +39,10 @@ const PredictionModal = ({ onClose }) => {
                         <div className='bg-white w-full  h-[20%] flex flex-col items-center justify-center rounded-2xl'>
                             <input
                                 type="text"
-                                className="h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 cursor-pointer" placeholder='Enter Model Id' onChange={(e)=>setmodelid(e.target.value)} row={8}
+                                className="h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 cursor-pointer" placeholder='Enter Model Id' onChange={(e)=>setmodelid(e.target.value)} row={8} spellCheck={false}
                             />
                         </div>
-                        <input className='bg-white rounded-2xl h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0' type="textarea" placeholder='Enter the data in the form of python dictionary' onChange={(e)=>setpredictdata(e.target.value)}/>
+                        <input className='bg-white rounded-2xl h-full w-full text-2xl pl-4 ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 flex flex-col items-center justify-center' type="textarea" placeholder='Enter the data in the form of python dictionary' onChange={(e)=>setpredictdata(e.target.value)} spellCheck={false}/>
                         <button type='button' onClick={GetPredictions} className='pt-sans-bold bg-green-500 w-[30%] h-[15%] text-2xl rounded-2xl active:scale-95 transition-all duration-300 ease-in-out tracking-wide'>Predict</button>
                         {setPrediction && (
                             <div className='pt-sans-regular text-xl flex flex-col'>

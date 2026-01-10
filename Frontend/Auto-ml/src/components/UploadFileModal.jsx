@@ -46,7 +46,7 @@ const UploadFileModal = ({ onClose }) => {
                                 <span className="text-gray-500 text-xl">{choosefile}</span>
                                 <input
                                     type="file"
-                                    className="absolute inset-0 opacity-0 cursor-pointer" onChange={(e)=>{setchoosefile(e.target.files[0].name) , setfile(e.target.files[0])}}
+                                    className="absolute inset-0 opacity-0 cursor-pointer" onChange={(e)=>{setchoosefile(e.target.files[0].name) , setfile(e.target.files[0])}} spellCheck={false}
                                 />
                             </label>
 

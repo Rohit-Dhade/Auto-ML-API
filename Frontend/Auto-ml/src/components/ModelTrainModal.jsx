@@ -54,7 +54,7 @@ const ModelTrainModal = ({ onClose }) => {
 
                         <form className='w-[80%] h-full flex flex-col gap-5 items-center'>
                             <div className='w-full h-[20%] flex items-center justify-center'>
-                                <input className='cursor-pointer w-full h-[90%] text-center bg-white text-2xl ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 rounded-2xl' type="text" placeholder='Enter the Filename' onChange={(e) => setfilename(e.target.value)} />
+                                <input className='cursor-pointer w-full h-[90%] text-center bg-white text-2xl ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 rounded-2xl' type="text" placeholder='Enter the Filename' onChange={(e) => setfilename(e.target.value)} spellCheck={false} />
                             </div>
                             <div className='w-full h-[20%] flex items-center justify-center'>
                                 <input className='cursor-pointer w-full h-[90%] text-center bg-white text-2xl ring-0 focus:ring-0 border-0 focus:border-0 outline-none focus:outline-0 rounded-2xl' type="text" placeholder='Enter target column' onChange={(e) => settarget(e.target.value)} />
