@@ -3,7 +3,7 @@ import pandas as pd
 import statsmodels.api as sm
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from typing import Annotated
-from app.services.dataset import DatasetCheck, InvalidDatasetError, DatasetAlreadyExists ,remove_model_from_logs
+from app.dataset import DatasetCheck, InvalidDatasetError, DatasetAlreadyExists ,remove_model_from_logs
 from pydantic import BaseModel, Field
 from app.api.pydantic_models import (
     TrainingEssentials,
