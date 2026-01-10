@@ -17,7 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://humble-appreciation-production-8bc7.up.railway.app"],
+    allow_origins=["http://http://localhost:5173/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
