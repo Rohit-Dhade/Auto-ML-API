@@ -3,7 +3,7 @@ import pandas as pd
 import statsmodels.api as sm
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from typing import Annotated
-from app.services.dataset import DatasetCheck, InvalidDatasetError, DatasetAlreadyExists
+from app.services.dataset import DatasetCheck, InvalidDatasetError, DatasetAlreadyExists ,remove_model_from_logs
 from pydantic import BaseModel, Field
 from app.api.pydantic_models import (
     TrainingEssentials,
@@ -131,12 +131,15 @@ def delete_model(model_id: str):
     dirPath = f"storage/models/{model_id}"
     try:
         shutil.rmtree(dirPath)
+        remove_model_from_logs(model_id)
         return {"response": "Deleted Successfully"}
 
     except Exception:
         raise HTTPException(
             status_code=400, detail="Model with given id does not exist"
         )
+        
+   
 
 
 @app.get("/logs")
