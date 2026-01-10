@@ -1,6 +1,5 @@
 import json , hashlib ,os , joblib
 from datetime import date
-import xgboost
 from fastapi import HTTPException
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
