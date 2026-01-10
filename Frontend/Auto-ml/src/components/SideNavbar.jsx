@@ -14,6 +14,9 @@ import ListDataset from './ListDataset';
 import ShowMetaData from './ShowMetaData';
 import UploadFileModal from './UploadFileModal';
 import DeleteDatasetModal from './DeleteDatasetModal';
+import ModelTrainModal from './ModelTrainModal';
+import DeleteModelModal from './DeleteModelModal';
+import PredictionModal from './PredictionModal';
 
 
 const SideNavbar = () => {
@@ -21,6 +24,9 @@ const SideNavbar = () => {
     const [meta, setmeta] = useState(false)
     const [filesupload, setfilesupload] = useState(false)
     const [deleteDataset, setdeleteDataset] = useState(false)
+    const [modeltrain, setmodeltrain] = useState(false)
+    const [deletModel, setdeletModel] = useState(false)
+    const [predictions, setpredictions] = useState(false)
 
     return (
         <>
@@ -66,7 +72,7 @@ const SideNavbar = () => {
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'>Delete Datasets</div>
                             </div>
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            <div onClick={()=>setmodeltrain(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <MdModelTraining size={20} />
                                 </div>
@@ -84,13 +90,13 @@ const SideNavbar = () => {
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'>Show Meta Data</div>
                             </div>
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            <div onClick={()=>setpredictions(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <MdBatchPrediction size={20} />
                                 </div>
                                 <div style={{ fontFamily: "Helvetica" }} className='w-full h-[13%] flex items-center text-[19px] text-gray-400'>Show Prediction</div>
                             </div>
-                            <div className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
+                            <div onClick={()=>setdeletModel(true)} className='flex items-center gap-2 h-[13%] hover:bg-[#191E18] transition-all duration-200 rounded-md pl-1 shrink-0 active:scale-98 cursor-pointer'>
                                 <div className='bg-[#2D352F] w-[20%] h-[80%] rounded-md flex items-center justify-center'>
                                     <RiDeleteBin6Line size={20} />
                                 </div>
@@ -120,6 +126,9 @@ const SideNavbar = () => {
             {meta && <ShowMetaData onClose={()=>setmeta(false)}/>}
             {filesupload && <UploadFileModal onClose={()=>setfilesupload(false)}/>}
             {deleteDataset && <DeleteDatasetModal onClose={()=>setdeleteDataset(false)}/>}
+            {modeltrain && <ModelTrainModal onClose={()=>setmodeltrain(false)}/>}
+            {deletModel && <DeleteModelModal onClose={()=>setdeletModel(false)}/>}
+            {predictions && <PredictionModal onClose={()=>setpredictions(false)}/>}
         </>
 
     )

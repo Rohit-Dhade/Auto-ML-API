@@ -2,6 +2,8 @@ import React from 'react'
 import SideNavbar from './components/SideNavbar';
 import MainContent from './components/MainContent';
 import ListDataset from './components/ListDataset';
+import ResultsCLassification from './components/ResultsCLassification';
+import ResultsRegression from './components/ResultsRegression';
 
 const App = () => {
   return (
@@ -11,6 +13,9 @@ const App = () => {
     </div>
 
       // <ListDataset/>
+      // <ResultsCLassification/>
+
+      // <ResultsRegression/>
   )
 }
 

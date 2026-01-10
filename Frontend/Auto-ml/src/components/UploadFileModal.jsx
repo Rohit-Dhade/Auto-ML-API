@@ -53,10 +53,9 @@ const UploadFileModal = ({ onClose }) => {
                         </div>
                         <button type='button' onClick={uploadfile} className='pt-sans-bold bg-green-500 w-[30%] h-[15%] text-2xl rounded-2xl active:scale-95 transition-all duration-300 ease-in-out tracking-wide'>Upload</button>
                         {filestatus && (
-                            <div className='mt-20'>{filestatus.detail}</div>
+                            <div className='mt-20 pt-sans-regular text-2xl'>{filestatus.detail}</div>
                         )}
                     </form>
-
 
                 </div>
             </div>
